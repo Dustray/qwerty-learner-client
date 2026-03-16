@@ -92,9 +92,8 @@
         
         <!-- 复制主HTML文件 -->
         <Copy SourceFiles="..\index.html" DestinationFiles="$(ProjectDir)wwwroot\index.html" />
-        
-        <!-- 复制service-worker.js文件 -->
-        <Copy SourceFiles="..\service-worker.js" DestinationFiles="$(ProjectDir)wwwroot\service-worker.js" />
+
+
 
         
         <!-- 复制public目录 -->
