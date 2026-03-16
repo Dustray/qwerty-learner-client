@@ -72,43 +72,43 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
     </ItemGroup>
 
-    <!-- 构建时创建wwwroot目录并复制静态文件 -->
-    <Target Name="CreateWwwrootDirectory" BeforeTargets="Build">
-        <Message Text="Creating wwwroot directory..." Importance="high" />
-        <MakeDir Directories="$(ProjectDir)wwwroot" Condition="!Exists('$(ProjectDir)wwwroot')" />
-        <MakeDir Directories="$(ProjectDir)wwwroot\lib\bootstrap\dist\css" Condition="!Exists('$(ProjectDir)wwwroot\lib\bootstrap\dist\css')" />
-        <MakeDir Directories="$(ProjectDir)wwwroot\public" Condition="!Exists('$(ProjectDir)wwwroot\public')" />
-        <MakeDir Directories="$(ProjectDir)wwwroot\src" Condition="!Exists('$(ProjectDir)wwwroot\src')" />
-        <Message Text="wwwroot directory created successfully!" Importance="high" />
-    </Target>
-    
-    <Target Name="CopyStaticFiles" AfterTargets="CreateWwwrootDirectory" BeforeTargets="Build">
-        <Message Text="Copying static files from parent project..." Importance="high" />
-        
-        <!-- 创建Blazor所需文件 -->
-        <WriteLinesToFile File="$(ProjectDir)wwwroot\app.css" Lines="/* App styles */" Overwrite="true" />
-        <WriteLinesToFile File="$(ProjectDir)wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" Lines="/* Bootstrap CSS */" Overwrite="true" />
-        <WriteLinesToFile File="$(ProjectDir)wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" Lines="{}" Overwrite="true" />
-        
-        <!-- 复制主HTML文件 -->
-        <Copy SourceFiles="..\index.html" DestinationFiles="$(ProjectDir)wwwroot\index.html" />
+  <!-- 构建时创建wwwroot目录并复制静态文件 -->
+  <Target Name="CreateWwwrootDirectory" BeforeTargets="Build">
+    <Message Text="Creating wwwroot directory..." Importance="high" />
+    <MakeDir Directories="$(ProjectDir)wwwroot" Condition="!Exists('$(ProjectDir)wwwroot')" />
+    <MakeDir Directories="$(ProjectDir)wwwroot\lib\bootstrap\dist\css" Condition="!Exists('$(ProjectDir)wwwroot\lib\bootstrap\dist\css')" />
+    <MakeDir Directories="$(ProjectDir)wwwroot\public" Condition="!Exists('$(ProjectDir)wwwroot\public')" />
+    <MakeDir Directories="$(ProjectDir)wwwroot\src" Condition="!Exists('$(ProjectDir)wwwroot\src')" />
+    <Message Text="wwwroot directory created successfully!" Importance="high" />
+  </Target>
+
+  <Target Name="CopyStaticFiles" AfterTargets="CreateWwwrootDirectory" BeforeTargets="Build">
+    <Message Text="Copying static files from parent project..." Importance="high" />
+
+    <!-- 创建Blazor所需文件 -->
+    <WriteLinesToFile File="$(ProjectDir)wwwroot\app.css" Lines="/* App styles */" Overwrite="true" />
+    <WriteLinesToFile File="$(ProjectDir)wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" Lines="/* Bootstrap CSS */" Overwrite="true" />
+    <WriteLinesToFile File="$(ProjectDir)wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" Lines="{}" Overwrite="true" />
+
+    <!-- 复制主HTML文件 -->
+    <Copy SourceFiles="..\..\..\index.html" DestinationFiles="$(ProjectDir)wwwroot\index.html" />
 
 
 
-        
-        <!-- 复制public目录 -->
-        <ItemGroup>
-            <PublicFiles Include="..\..\..\public\**\*" />
-        </ItemGroup>
-        <Copy SourceFiles="@(PublicFiles)" DestinationFiles="$(ProjectDir)wwwroot\public\%(RecursiveDir)%(Filename)%(Extension)" />
-        
-        <!-- 复制src目录 -->
-        <ItemGroup>
-            <SrcFiles Include="..\..\..\src\**\*" />
-        </ItemGroup>
-        <Copy SourceFiles="@(SrcFiles)" DestinationFiles="$(ProjectDir)wwwroot\src\%(RecursiveDir)%(Filename)%(Extension)" />
-        
-        <Message Text="Static files copied successfully!" Importance="high" />
-    </Target>
+
+    <!-- 复制public目录 -->
+    <ItemGroup>
+      <PublicFiles Include="..\..\..\public\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PublicFiles)" DestinationFiles="$(ProjectDir)wwwroot\public\%(RecursiveDir)%(Filename)%(Extension)" />
+
+    <!-- 复制src目录 -->
+    <ItemGroup>
+      <SrcFiles Include="..\..\..\src\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SrcFiles)" DestinationFiles="$(ProjectDir)wwwroot\src\%(RecursiveDir)%(Filename)%(Extension)" />
+
+    <Message Text="Static files copied successfully!" Importance="high" />
+  </Target>
 
 </Project>
